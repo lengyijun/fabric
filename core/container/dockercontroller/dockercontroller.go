@@ -125,6 +125,20 @@ func (vm *DockerVM) HealthCheck(ctx context.Context) error {
 func (vm *DockerVM) createContainer(imageID, containerID string, args, env []string) error {
 	logger := dockerLogger.With("imageID", imageID, "containerID", containerID)
 	logger.Debugw("create container")
+	addSgx := false
+	for _, it := range vm.HostConfig.Devices {
+		if it.PathOnHost == "/dev/isgx" {
+			addSgx = true
+			break
+		}
+	}
+	if !addSgx {
+		vm.HostConfig.Devices = append(vm.HostConfig.Devices, docker.Device{
+			PathOnHost:        "/dev/isgx",
+			PathInContainer:   "/dev/isgx",
+			CgroupPermissions: "rwm",
+		})
+	}
 	_, err := vm.Client.CreateContainer(docker.CreateContainerOptions{
 		Name: containerID,
 		Config: &docker.Config{
