@@ -200,7 +200,7 @@ func getLDFlagsOpts() string {
 
 var buildScript = `
 set -e
-if [ -f /chaincode/input/src/Makefile ]; then
+if [ -f "/chaincode/input/src/Makefile" ]; then
 	make -C /chaincode/input/src
 	echo Make Done!
 else 
