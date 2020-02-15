@@ -203,7 +203,10 @@ set -e
 if [ -f "/chaincode/input/src/Makefile" ]; then
 	make -C /chaincode/input/src
 	echo Make Done!
-else 
+elif [ -f "/chaincode/input/src/%[2]s/Makefile" ]; then
+	make -C /chaincode/input/src/%[2]s
+	echo Make Done!
+else
 	echo No Makefile
 fi
 if [ -f "/chaincode/input/src/go.mod" ] && [ -d "/chaincode/input/src/vendor" ]; then
