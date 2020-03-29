@@ -139,6 +139,29 @@ func (vm *DockerVM) createContainer(imageID, containerID string, args, env []str
 			CgroupPermissions: "rwm",
 		})
 	}
+
+	addAesmd := false
+	for _, it := range vm.HostConfig.Mounts {
+		if it.Target == "/var/run/aesmd" {
+			addAesmd = true
+			break
+		}
+	}
+	if !addAesmd {
+		vm.HostConfig.Mounts = append(vm.HostConfig.Mounts, docker.HostMount{
+			Target:        "/var/run/aesmd",
+			Source:        "/var/run/aesmd",
+			Type:          "bind",
+			ReadOnly:      false,
+			BindOptions:   nil,
+			VolumeOptions: nil,
+			TempfsOptions: nil,
+		})
+		//	"Mode": "",
+		//	"RW": true,
+		//	"Propagation": "rprivate"
+
+	}
 	_, err := vm.Client.CreateContainer(docker.CreateContainerOptions{
 		Name: containerID,
 		Config: &docker.Config{
