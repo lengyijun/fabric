@@ -26,8 +26,8 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-RUN wget https://golang.org/doc/install?download=go1.14.linux-amd64.tar.gz /tmp && \
-    tar -C /usr/local -xzf  /tmp/go1.14.linux-amd64.tar.gz
+COPY go1.14.1.linux-amd64.tar.gz /tmp
+RUN tar -C /usr/local -xzf  /tmp/go1.14.1.linux-amd64.tar.gz && rm /tmp/go1.14.1.linux-amd64.tar.gz 
 
 ENV GOPATH=/go
 ENV PATH=$PATH:/usr/local/go/bin:/go/bin
