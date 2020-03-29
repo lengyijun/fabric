@@ -25,3 +25,4 @@ TESTS*.xml
 .tox/
 .vagrant/
 .vscode
+images/ccenv/go1.14.1.linux-amd64.tar.gz

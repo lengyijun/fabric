@@ -35,7 +35,8 @@ WORKDIR /opt/intel
 
 # Install SGX COMMON
 RUN wget ${SGX_REPO}/${SGX_LIB_COMMON} \
- && dpkg -i ${SGX_LIB_COMMON}
+ && dpkg -i ${SGX_LIB_COMMON} \
+ && rm ${SGX_LIB_COMMON}
 
 # Install SGX SDK
 RUN wget ${SGX_REPO}/${SGX_SDK_BIN} \
@@ -48,5 +49,6 @@ ENV PATH=$PATH:$SGX_SDK/bin:$SGX_SDK/bin/x64
 ENV PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$SGX_SDK/pkgconfig
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SGX_SDK/sdk_libs
 
-RUN addgroup --gid 500 chaincode && adduser --uid 500 --disabled-password  --home /home/chaincode --ingroup chaincode --gecos '' chaincode
-USER chaincode
+#RUN addgroup --gid 500 chaincode && adduser --uid 500 --disabled-password  --home /home/chaincode --ingroup chaincode --gecos '' chaincode
+#USER chaincode
+#CMD ["LD_LIBRARY_PATH=/opt/intel/libsgx-enclave-common/aesm","/opt/intel/libsgx-enclave-common/aesm/aesm_service","&"]

@@ -38,7 +38,8 @@ WORKDIR /opt/intel
 
 # Install SGX COMMON
 RUN wget ${SGX_REPO}/${SGX_LIB_COMMON} \
- && dpkg -i ${SGX_LIB_COMMON}
+ && dpkg -i ${SGX_LIB_COMMON} \
+ && rm ${SGX_LIB_COMMON}
 
 # Install SGX SDK
 RUN wget ${SGX_REPO}/${SGX_SDK_BIN} \
@@ -54,9 +55,11 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SGX_SDK/sdk_libs
 COPY go1.14.1.linux-amd64.tar.gz /tmp
 RUN tar -C /usr/local -xzf  /tmp/go1.14.1.linux-amd64.tar.gz && rm /tmp/go1.14.1.linux-amd64.tar.gz
 ENV GOPATH=/go
+ENV GOROOT=/usr/local/go
 ENV PATH=$PATH:/usr/local/go/bin:/go/bin
 
 RUN mkdir -p /chaincode/output /chaincode/input
-RUN addgroup --gid 500 chaincode && adduser --uid 500 --disabled-password  --home /home/chaincode --ingroup chaincode --gecos '' chaincode
-RUN chown -R chaincode:chaincode /chaincode
-USER chaincode
+
+#RUN addgroup --gid 500 chaincode && adduser --uid 500 --disabled-password  --home /home/chaincode --ingroup chaincode --gecos '' chaincode
+#RUN chown -R chaincode:chaincode /chaincode
+#USER chaincode
