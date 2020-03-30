@@ -31,7 +31,7 @@ ARG SGX_SDK_BIN=sgx_linux_x64_sdk_2.6.100.51363.bin
 RUN mkdir -p /opt/intel \
  && mkdir -p /etc/init
 
-WORKDIR /opt/intel
+WORKDIR /usr/local/bin
 
 # Install SGX COMMON
 RUN wget ${SGX_REPO}/${SGX_LIB_COMMON} \
