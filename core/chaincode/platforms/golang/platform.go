@@ -192,6 +192,8 @@ const staticLDFlagsOpts = "-ldflags \"-linkmode external -extldflags '-static'\"
 const dynamicLDFlagsOpts = ""
 
 func getLDFlagsOpts() string {
+	//always return dynamicLDFlagsOpts
+	return dynamicLDFlagsOpts
 	if viper.GetBool("chaincode.golang.dynamicLink") {
 		return dynamicLDFlagsOpts
 	}
