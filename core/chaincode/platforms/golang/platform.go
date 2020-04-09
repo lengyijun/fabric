@@ -202,11 +202,11 @@ func getLDFlagsOpts() string {
 
 var buildScript = `
 set -e
-if [ -f "/chaincode/input/src/Makefile" ]; then
+if [ -f "/chaincode/input/src/Makefile" -o -f "/chaincode/input/src/makefile" ]; then
 	cd /chaincode/input/src
 	make
 	echo Make Done!
-elif [ -f "/chaincode/input/src/%[2]s/Makefile" ]; then
+elif [ -f "/chaincode/input/src/%[2]s/Makefile" -o -f "/chaincode/input/src/%[2]s/makefile" ]; then
 	cd /chaincode/input/src/%[2]s
 	make
 	echo Make Done!
