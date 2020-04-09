@@ -52,8 +52,7 @@ ENV PATH=$PATH:$SGX_SDK/bin:$SGX_SDK/bin/x64
 ENV PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$SGX_SDK/pkgconfig
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SGX_SDK/sdk_libs
 
-COPY go1.14.1.linux-amd64.tar.gz /tmp
-RUN tar -C /usr/local -xzf  /tmp/go1.14.1.linux-amd64.tar.gz && rm /tmp/go1.14.1.linux-amd64.tar.gz
+ADD go1.14.1.linux-amd64.tar.gz /usr/local
 ENV GOPATH=/go
 ENV GOROOT=/usr/local/go
 ENV PATH=$PATH:/usr/local/go/bin:/go/bin
