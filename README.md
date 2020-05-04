@@ -11,8 +11,11 @@ Sgx的Makefile里，enclave.signed.so相关的都不用动，App端的需要修�
 可以看一下github上我的修改，就明白了
 
 Docker image改成ubuntu有3个原因：
+
 1.fabric-private-chaincode用的是ubuntu
+
 2.安装sgx sdk不需要从头编译，用deb安装
+
 3.可以动态链接
 
 /var/run/Aesmd我都会挂到docker container里面，这是改了源码的
