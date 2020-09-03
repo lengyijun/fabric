@@ -613,7 +613,7 @@ ledger:
        # Number of retries for CouchDB errors during peer startup
        maxRetriesOnStartup: 12
        # CouchDB request timeout (unit: duration, e.g. 20s)
-       requestTimeout: 40s
+       requestTimeout: 35s
        # Limit on the number of records per each CouchDB query
        # Note that chaincode queries are only bound by totalQueryLimit.
        # Internally the chaincode may execute multiple CouchDB queries,

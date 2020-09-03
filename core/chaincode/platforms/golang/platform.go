@@ -26,7 +26,7 @@ import (
 	"github.com/hyperledger/fabric/core/chaincode/platforms/util"
 	"github.com/hyperledger/fabric/internal/ccmetadata"
 	"github.com/pkg/errors"
-	"github.com/spf13/viper"
+	//"github.com/spf13/viper"
 )
 
 // Platform for chaincodes written in Go
@@ -194,10 +194,10 @@ const dynamicLDFlagsOpts = ""
 func getLDFlagsOpts() string {
 	//always return dynamicLDFlagsOpts
 	return dynamicLDFlagsOpts
-	if viper.GetBool("chaincode.golang.dynamicLink") {
-		return dynamicLDFlagsOpts
-	}
-	return staticLDFlagsOpts
+	//if viper.GetBool("chaincode.golang.dynamicLink") {
+	//	return dynamicLDFlagsOpts
+	//}
+	//return staticLDFlagsOpts
 }
 
 var buildScript = `

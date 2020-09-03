@@ -2,63 +2,31 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-FROM ubuntu:bionic
+FROM baiduxlab/sgx-rust:latest
 
-RUN apt-get update \
- && apt-get install -y \
-    wget \
-    curl \
-    git \
-    build-essential \
-    ca-certificates \
-    protobuf-compiler \
-    python-protobuf \
-    libprotobuf-dev \
-    libssl-dev \
-    libcurl4-openssl-dev \
-    libtool \
-    cmake \
-    vim \
-    g++ \
-    gcc \
-    make \
- && apt-get -y -q upgrade \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+RUN cd /opt \
+ && git clone https://github.com/apache/incubator-teaclave-sgx-sdk --depth=1
 
-ARG SGX_REPO=https://download.01.org/intel-sgx/linux-2.6/ubuntu18.04-server
-ARG SGX_LIB_COMMON=libsgx-enclave-common_2.6.100.51363-bionic1_amd64.deb
-ARG SGX_SDK_BIN=sgx_linux_x64_sdk_2.6.100.51363.bin
+# ARG SGX_REPO=https://download.01.org/intel-sgx/linux-2.6/ubuntu18.04-server
+# ARG SGX_LIB_COMMON=libsgx-enclave-common_2.6.100.51363-bionic1_amd64.deb
+# ARG SGX_SDK_BIN=sgx_linux_x64_sdk_2.6.100.51363.bin
 
 # Create a place for our SGX SDK
 RUN mkdir -p /opt/intel \
- && mkdir -p /etc/init
+ && mkdir -p /etc/init  \
+ && mkdir -p /chaincode/output /chaincode/input \
+ && ln -s /opt/sgxsdk /opt/intel/sgxsdk
 
 WORKDIR /opt/intel
 
-# Install SGX COMMON
-RUN wget ${SGX_REPO}/${SGX_LIB_COMMON} \
- && dpkg -i ${SGX_LIB_COMMON} \
- && rm ${SGX_LIB_COMMON}
-
-# Install SGX SDK
-RUN wget ${SGX_REPO}/${SGX_SDK_BIN} \
- && chmod +x ${SGX_SDK_BIN} \
- && echo "yes" | ./${SGX_SDK_BIN} \
- && rm ${SGX_SDK_BIN}
-
-ENV SGX_SDK=/opt/intel/sgxsdk
+ENV SGX_SDK=/opt/sgxsdk
 ENV PATH=$PATH:$SGX_SDK/bin:$SGX_SDK/bin/x64
 ENV PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$SGX_SDK/pkgconfig
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SGX_SDK/sdk_libs
 
-ADD go1.14.1.linux-amd64.tar.gz /usr/local
+ADD go1.14.4.linux-amd64.tar.gz /usr/local
 ENV GOPATH=/go
 ENV GOROOT=/usr/local/go
-ENV PATH=$PATH:/usr/local/go/bin:/go/bin
+ENV PATH=$PATH:/usr/local/go/bin:/go/bin:/root/.cargo/bin
 
-RUN mkdir -p /chaincode/output /chaincode/input
 
-#RUN addgroup --gid 500 chaincode && adduser --uid 500 --disabled-password  --home /home/chaincode --ingroup chaincode --gecos '' chaincode
-#RUN chown -R chaincode:chaincode /chaincode
-#USER chaincode

@@ -106,7 +106,7 @@ all: check-go-version native docker checks
 checks: basic-checks unit-test integration-test
 
 .PHONY: basic-checks
-basic-checks: check-go-version license spelling references trailing-spaces linter check-metrics-doc filename-spaces
+basic-checks: check-go-version license spelling references trailing-spaces linter filename-spaces
 
 .PHONY: desk-checks
 desk-check: checks verify
@@ -177,15 +177,15 @@ check-deps: gotools
 	@echo "DEP: Checking for dependency issues.."
 	./scripts/check_deps.sh
 
-.PHONY: check-metrics-docs
-check-metrics-doc: gotools
-	@echo "METRICS: Checking for outdated reference documentation.."
-	./scripts/metrics_doc.sh check
+#.PHONY: check-metrics-docs
+#check-metrics-doc: gotools
+#	@echo "METRICS: Checking for outdated reference documentation.."
+#	./scripts/metrics_doc.sh check
 
-.PHONY: generate-metrics-docs
-generate-metrics-doc: gotools
-	@echo "Generating metrics reference documentation..."
-	./scripts/metrics_doc.sh generate
+#.PHONY: generate-metrics-docs
+#generate-metrics-doc: gotools
+#	@echo "Generating metrics reference documentation..."
+#	./scripts/metrics_doc.sh generate
 
 .PHONY: protos
 protos: gotools

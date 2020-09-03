@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	defaultExecutionTimeout = 30 * time.Second
+	defaultExecutionTimeout = 20 * 60 * time.Second
 	minimumStartupTimeout   = 5 * time.Second
 )
 
